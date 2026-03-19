@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物详情 - 宠物领养系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20pet%20adoption%20logo%20with%20cat%20and%20dog&image_size=square" alt="宠物领养网站">
+                <span>宠物领养网站</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="#">领养须知</a></li>
+                    <li><a href="#">领养宠物服务</a></li>
+                    <li><a href="#">宠物小知识</a></li>
+                </ul>
+            </nav>
+            <div class="user">
+                <a href="login.html" class="login-btn">登录</a>
+                <a href="register.html" class="register-btn">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 宠物详情 -->
+    <section class="pet-detail-section">
+        <div class="container">
+            <div class="pet-detail" id="pet-detail">
+                <!-- 宠物详情将通过JavaScript动态生成 -->
+            </div>
+            
+            <!-- 领养申请表 -->
+            <div class="adoption-form">
+                <h3>领养申请</h3>
+                <form id="adoption-form">
+                    <input type="hidden" id="petId" name="petId">
+                    <div class="form-group">
+                        <label for="reason">领养原因</label>
+                        <textarea id="reason" name="reason" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">联系方式</label>
+                        <input type="text" id="contact" name="contact" required>
+                    </div>
+                    <button type="submit" class="submit-btn">提交申请</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 登录模态框 -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户登录</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">账号</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group captcha">
+                    <label for="captcha">验证码</label>
+                    <input type="text" id="captcha" name="captcha" required>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=simple%20captcha%20image%20with%20random%20letters%20and%20numbers%2C%20black%20text%20on%20white%20background%2C%20clear%20and%20legible&image_size=square" alt="验证码">
+                </div>
+                <button type="submit" class="submit-btn">登录</button>
+                <p class="register-link"><a href="#" onclick="showRegisterModal()">用户注册</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户注册</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-username">账号</label>
+                    <input type="text" id="reg-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">密码</label>
+                    <input type="password" id="reg-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">手机号</label>
+                    <input type="tel" id="reg-phone" name="phone" required>
+                </div>
+                <div class="form-group captcha">
+                    <label for="reg-captcha">验证码</label>
+                    <input type="text" id="reg-captcha" name="captcha" required>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=simple%20captcha%20image%20with%20random%20letters%20and%20numbers%2C%20black%20text%20on%20white%20background%2C%20clear%20and%20legible&image_size=square" alt="验证码">
+                </div>
+                <button type="submit" class="submit-btn">注册</button>
+                <p class="login-link"><a href="#" onclick="showLoginModal()">已有账号？立即登录</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 宠物领养系统 版权所有</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

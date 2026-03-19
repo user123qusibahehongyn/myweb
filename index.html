@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物领养系统</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20pet%20adoption%20logo%20with%20cat%20and%20dog&image_size=square" alt="宠物领养网站">
+                <span>宠物领养网站</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">首页</a></li>
+                    <li><a href="#" onclick="showPage('pets')">可领养宠物</a></li>
+                    <li><a href="#" onclick="showPage('adoption-services')">领养服务</a></li>
+                    <li><a href="#" onclick="showPage('pet-knowledge')">宠物知识</a></li>
+                    <li><a href="#" onclick="showPage('adoption-stories')">领养故事</a></li>
+                    <li><a href="#" onclick="showPage('topic-circle')">话题圈</a></li>
+                    <li><a href="#" onclick="showPage('messages')">领养咨询</a></li>
+                </ul>
+            </nav>
+            <div class="user">
+                <a href="#" class="login-btn">登录</a>
+                <a href="#" class="register-btn">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 页面内容 -->
+    <main>
+        <!-- 首页 -->
+        <section id="home" class="page">
+            <!-- 英雄区域轮播 -->
+            <section class="hero-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20orange%20cat%20with%20blue%20fur%20patch%2C%20happy%20expression%2C%20warm%20background%2C%20stray%20cat%20adoption&image_size=landscape_16_9" alt="领养宠物1">
+                            <div class="carousel-content">
+                                <h1>给它们一个温暖的家</h1>
+                                <p>每一只流浪猫都值得被爱。通过我们的领养系统，帮助这些可爱的小生命找到永远的家。</p>
+                                <a href="#" onclick="showPageWithFilter('pets', '猫'); return false;" class="btn-primary">浏览可领养猫咪</a>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20golden%20retriever%20puppy%2C%20happy%20expression%2C%20outdoor%20setting%2C%20stray%20dog%20adoption&image_size=landscape_16_9" alt="领养宠物2">
+                            <div class="carousel-content">
+                                <h1>领养代替购买</h1>
+                                <p>每一只狗狗都渴望一个家。选择领养，给它们第二次机会，收获一份无条件的爱。</p>
+                                <a href="#" onclick="showPageWithFilter('pets', '狗'); return false;" class="btn-primary">浏览可领养狗狗</a>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=small%20cute%20rabbit%20and%20guinea%20pig%2C%20happy%20together%2C%20cozy%20setting%2C%20small%20pet%20adoption&image_size=landscape_16_9" alt="领养宠物3">
+                            <div class="carousel-content">
+                                <h1>小生命也需要关爱</h1>
+                                <p>为每一只宠物找到温暖的家</p>
+                                <a href="#" onclick="showPage('pets'); return false;" class="btn-primary">浏览可领养宠物</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control prev" onclick="prevSlide()">❮</button>
+                    <button class="carousel-control next" onclick="nextSlide()">❯</button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="goToSlide(0)"></span>
+                        <span class="indicator" onclick="goToSlide(1)"></span>
+                        <span class="indicator" onclick="goToSlide(2)"></span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- 宠物列表页面 -->
+        <section id="pets" class="page" style="display: none;">
+            <div class="container">
+                <h2>可领养宠物</h2>
+                
+                <!-- 搜索和筛选区域 -->
+                <div class="search-filter-section">
+                    <div class="search-box">
+                        <input type="text" id="pet-search" placeholder="搜索宠物名称、品种...">
+                        <button onclick="searchPets()" class="btn">搜索</button>
+                    </div>
+                    <div class="filter-options">
+                        <select id="pet-type-filter" onchange="filterPets()">
+                            <option value="">全部类型</option>
+                            <option value="狗">狗</option>
+                            <option value="猫">猫</option>
+                            <option value="其他">其他</option>
+                        </select>
+                        <select id="pet-age-filter" onchange="filterPets()">
+                            <option value="">全部年龄</option>
+                            <option value="0-1">1岁以下</option>
+                            <option value="1-3">1-3岁</option>
+                            <option value="3+">3岁以上</option>
+                        </select>
+                        <select id="pet-gender-filter" onchange="filterPets()">
+                            <option value="">全部性别</option>
+                            <option value="公">公</option>
+                            <option value="母">母</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="pets-grid" id="pets-grid">
+                    <!-- 宠物卡片将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 领养须知 -->
+        <section id="adoption-guide" class="page" style="display: none;">
+            <div class="container">
+                <div class="page-header">
+                    <h2>领养须知</h2>
+                    <button class="btn back-btn" onclick="showPage('pet-detail')">返回申请表</button>
+                </div>
+                <div class="content">
+                    <h3>领养条件</h3>
+                    <ul>
+                        <li>年满18周岁，具有完全民事行为能力</li>
+                        <li>有固定的住所和稳定的收入</li>
+                        <li>能够提供适合宠物生活的环境</li>
+                        <li>承诺对宠物负责，不离不弃</li>
+                    </ul>
+                    <h3>领养流程</h3>
+                    <ol>
+                        <li>浏览可领养宠物列表，选择心仪的宠物</li>
+                        <li>填写领养申请表，提交个人信息和领养原因</li>
+                        <li>等待审核，工作人员会与您联系</li>
+                        <li>审核通过后，签署领养协议，接走宠物</li>
+                    </ol>
+                    <h3>领养后须知</h3>
+                    <ul>
+                        <li>定期带宠物接种疫苗，进行健康检查</li>
+                        <li>为宠物提供均衡的饮食和适当的运动</li>
+                        <li>对宠物进行必要的训练和社交化</li>
+                        <li>如遇特殊情况无法继续饲养，请联系我们</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 领养宠物服务 -->
+        <section id="adoption-services" class="page" style="display: none;">
+            <div class="container">
+
+                
+                <div class="adoption-content">
+                    <div class="section">
+                        <h3>🌟 我们的服务</h3>
+                        
+                        <div class="service-section">
+                            <h4><i class="fas fa-stethoscope"></i> 1. 宠物健康检查</h4>
+                            <div class="service-details">
+                                <h5>基础体检：</h5>
+                                <ul>
+                                    <li>体温、心率、呼吸频率测量，评估生命体征是否稳定。</li>
+                                    <li>体重与体况评分（BCS），判断是否存在肥胖或消瘦问题。</li>
+                                    <li>皮肤与被毛检查，排查皮肤病、寄生虫（如跳蚤、螨虫）。</li>
+                                </ul>
+                                
+                                <h5>深度筛查：</h5>
+                                <ul>
+                                    <li>血常规与生化检查，评估肝肾功能、血糖、电解质水平。</li>
+                                    <li>粪便检查，排查肠道寄生虫（如蛔虫、球虫）。</li>
+                                    <li>传染病筛查（犬瘟、细小、猫瘟、猫艾滋/白血病等）。</li>
+                                    <li>耳道、口腔、眼部检查，及时发现炎症或损伤。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="service-section">
+                            <h4><i class="fas fa-syringe"></i> 2. 疫苗接种</h4>
+                            <div class="service-details">
+                                <h5>犬类疫苗：</h5>
+                                <ul>
+                                    <li>核心疫苗：犬瘟热、细小病毒、腺病毒（二联/四联/六联疫苗），首免需完成3针，之后每年加强1针。</li>
+                                    <li>推荐疫苗：狂犬病疫苗（法律强制接种），每年加强1针；可选择接种钩端螺旋体、犬副流感等疫苗。</li>
+                                </ul>
+                                
+                                <h5>猫类疫苗：</h5>
+                                <ul>
+                                    <li>核心疫苗：猫瘟、猫杯状病毒、猫疱疹病毒（三联疫苗），首免需完成2针，之后每年加强1针。</li>
+                                    <li>推荐疫苗：狂犬病疫苗（部分地区强制），每年加强1针；可选择接种猫白血病（FeLV）疫苗（针对户外猫）。</li>
+                                </ul>
+                                
+                                <h5>接种须知：</h5>
+                                <ul>
+                                    <li>接种前需确认宠物健康，无发热、呕吐、腹泻等症状。</li>
+                                    <li>接种后留观30分钟，避免过敏反应；一周内避免洗澡与剧烈运动。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="service-section">
+                            <h4><i class="fas fa-scalpel"></i> 3. 绝育服务</h4>
+                            <div class="service-details">
+                                <h5>适用对象：</h5>
+                                <ul>
+                                    <li>犬猫满6个月（性成熟前），无繁殖计划的宠物。</li>
+                                    <li>存在行为问题（如发情期乱叫、乱尿、攻击性）的宠物。</li>
+                                </ul>
+                                
+                                <h5>手术内容：</h5>
+                                <ul>
+                                    <li>公犬/公猫：去势术（摘除睾丸），手术时间短，恢复快。</li>
+                                    <li>母犬/母猫：卵巢子宫摘除术（绝育术），可彻底避免发情、子宫蓄脓、乳腺肿瘤等疾病。</li>
+                                </ul>
+                                
+                                <h5>术后护理：</h5>
+                                <ul>
+                                    <li>术后佩戴伊丽莎白圈，防止舔舐伤口。</li>
+                                    <li>7~10天内限制剧烈运动，保持伤口干燥清洁。</li>
+                                    <li>遵医嘱服用止痛药与抗生素，定期复查拆线。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="service-section">
+                            <h4><i class="fas fa-comments"></i> 4. 领养咨询</h4>
+                            <div class="service-details">
+                                <h5>匹配评估：</h5>
+                                <ul>
+                                    <li>根据领养人的居住环境（如是否有阳台、是否合租）、作息时间、经济能力，推荐适合的宠物体型与品种。</li>
+                                    <li>针对有小孩/其他宠物的家庭，提供兼容性评估与相处指导。</li>
+                                </ul>
+                                
+                                <h5>知识科普：</h5>
+                                <ul>
+                                    <li>讲解不同品种的性格特点、饲养难度、日常开销（如粮食、医疗、美容）。</li>
+                                    <li>科普宠物应激反应、分离焦虑等常见问题的应对方法。</li>
+                                </ul>
+                                
+                                <h5>后续支持：</h5>
+                                <ul>
+                                    <li>提供领养后1个月内免费咨询服务，解答喂养、训练、健康等问题。</li>
+                                    <li>建立领养人社群，方便经验交流与互助。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📋 服务流程</h3>
+                        <ol class="process-list">
+                            <li>
+                                <strong>咨询：</strong>
+                                <p>线上/线下咨询领养要求、费用、宠物信息，了解领养协议与责任。工作人员会了解您的生活习惯、居住条件，初步匹配合适的宠物。</p>
+                            </li>
+                            <li>
+                                <strong>选择：</strong>
+                                <p>浏览待领养宠物档案（包含年龄、品种、性格、健康状况、照片/视频）。预约线下见面，与心仪宠物互动，观察相处状态。</p>
+                            </li>
+                            <li>
+                                <strong>申请：</strong>
+                                <p>填写《领养申请表》，提交身份信息、居住证明、联系方式。同意并签署《领养协议》，明确双方权利与义务（如不得遗弃、定期回访）。</p>
+                            </li>
+                            <li>
+                                <strong>审核：</strong>
+                                <p>工作人员进行背景审核（电话/上门家访），确认领养人具备饲养条件。审核通过后，通知领养人办理交接手续。</p>
+                            </li>
+                            <li>
+                                <strong>交接：</strong>
+                                <p>领取宠物及健康档案（疫苗本、驱虫记录、绝育证明）。工作人员现场讲解喂养注意事项、应急处理方法。缴纳少量领养押金（部分机构设置，满一定期限后退还）。</p>
+                            </li>
+                            <li>
+                                <strong>回访：</strong>
+                                <p>领养后1周、1个月、3个月进行线上/线下回访，跟踪宠物适应情况。提供持续的饲养指导与医疗建议，确保宠物幸福生活。</p>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>💡 温馨提示</h3>
+                        <div class="tips-box">
+                            <ul>
+                                <li>领养前请慎重考虑，宠物是十几年的陪伴，需承担长期的经济与时间责任。</li>
+                                <li>拒绝“冲动领养”，确保您和家人都做好了迎接新成员的准备。</li>
+                                <li>领养代替购买，给流浪动物一个温暖的家。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 宠物小知识 -->
+        <section id="pet-knowledge" class="page" style="display: none;">
+            <div class="container">
+                <h2>🐾 宠物小知识</h2>
+                
+                <!-- 分类选项卡 -->
+                <div class="knowledge-tabs">
+                    <button class="tab-btn active" onclick="showKnowledgeTab('dog')">🐶 狗狗篇</button>
+                    <button class="tab-btn" onclick="showKnowledgeTab('cat')">🐱 猫咪篇</button>
+                </div>
+                
+                <!-- 狗狗篇内容 -->
+                <div id="dog-tab" class="tab-content active">
+                    <div class="knowledge-section">
+                        <h3>1. 如何正确喂养狗狗</h3>
+                        <div class="knowledge-content">
+                            <h4>营养均衡：</h4>
+                            <ul>
+                                <li><strong>蛋白质：</strong>占日粮20%~30%，来源为优质肉类（鸡胸肉、牛肉）、蛋类、豆制品，用于肌肉修复与生长。</li>
+                                <li><strong>脂肪：</strong>占日粮10%~15%，提供能量并维护皮肤健康，避免过量导致肥胖。</li>
+                                <li><strong>碳水化合物：</strong>占日粮50%~60%，以糙米、燕麦等粗粮为主，提供持久能量。</li>
+                                <li><strong>维生素与矿物质：</strong>通过蔬菜（胡萝卜、西兰花）、专用宠物保健品补充，维持骨骼与免疫功能。</li>
+                            </ul>
+                            
+                            <h4>分龄喂养：</h4>
+                            <ul>
+                                <li><strong>幼犬（2~12月）：</strong>少食多餐（3~4次/天），选择高蛋白幼犬粮，避免喂食牛奶（易乳糖不耐受）。</li>
+                                <li><strong>成犬（1~7岁）：</strong>每日1~2餐，根据体型（小型/中型/大型）控制食量，避免暴饮暴食。</li>
+                                <li><strong>老年犬（7岁+）：</strong>选择低脂肪、高纤维的老年犬粮，补充关节养护类营养（如葡萄糖胺）。</li>
+                            </ul>
+                            
+                            <h4>禁忌食物：</h4>
+                            <p>严禁喂食巧克力、葡萄/葡萄干、洋葱、大蒜、木糖醇、酒精类食物，这些会导致中毒甚至死亡。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="knowledge-section">
+                        <h3>2. 狗狗的日常护理</h3>
+                        <div class="knowledge-content">
+                            <h4>毛发护理：</h4>
+                            <ul>
+                                <li><strong>短毛犬：</strong>每周用橡胶梳梳理1次，去除浮毛；长毛犬（如金毛、萨摩耶）需每日梳理，防止打结。</li>
+                                <li><strong>洗澡：</strong>夏季每1~2周1次，冬季每2~3周1次，使用宠物专用沐浴露，避免频繁洗澡破坏皮肤油脂层。</li>
+                            </ul>
+                            
+                            <h4>清洁与健康检查：</h4>
+                            <ul>
+                                <li><strong>指甲：</strong>每2~3周修剪1次，避开血线，避免剪伤出血；若狗狗抗拒，可使用磨甲器。</li>
+                                <li><strong>耳朵：</strong>每周用宠物洗耳液清洁1次，观察是否有异味、红肿，预防耳螨与中耳炎。</li>
+                                <li><strong>眼睛：</strong>每日用生理盐水擦拭眼角分泌物，若出现持续流泪、红肿，需及时就医。</li>
+                                <li><strong>口腔：</strong>每周刷牙2~3次，使用宠物牙膏与牙刷，预防牙结石与牙周病。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 猫咪篇内容 -->
+                <div id="cat-tab" class="tab-content" style="display: none;">
+                    <div class="knowledge-section">
+                        <h3>1. 如何正确喂养猫咪</h3>
+                        <div class="knowledge-content">
+                            <h4>营养核心：</h4>
+                            <ul>
+                                <li><strong>蛋白质：</strong>猫咪是纯肉食动物，日粮中蛋白质占比需≥30%，优先选择动物蛋白（鸡肉、鱼肉、牛肉）。</li>
+                                <li><strong>脂肪：</strong>占比15%~20%，提供能量并维护毛发光泽；避免高碳水食物（如过量谷物），易导致肥胖与糖尿病。</li>
+                                <li><strong>牛磺酸：</strong>必须额外补充，缺乏会导致视网膜退化与心脏疾病，可通过专用猫粮或宠物保健品获取。</li>
+                            </ul>
+                            
+                            <h4>分龄喂养：</h4>
+                            <ul>
+                                <li><strong>幼猫（2~12月）：</strong>少食多餐（3~4次/天），选择幼猫奶糕或高蛋白幼猫粮，可搭配羊奶粉补充营养。</li>
+                                <li><strong>成猫（1~7岁）：</strong>每日2餐，可采用干湿粮结合喂养，保证每日充足饮水（避免长期只喂干猫粮）。</li>
+                                <li><strong>老年猫（7岁+）：</strong>选择低磷、易消化的老年猫粮，补充益生菌维护肠道健康。</li>
+                            </ul>
+                            
+                            <h4>喂养禁忌：</h4>
+                            <p>严禁喂食洋葱、大蒜、巧克力、葡萄、百合科植物（如百合、郁金香），这些对猫咪有剧毒。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="knowledge-section">
+                        <h3>2. 猫咪的日常护理</h3>
+                        <div class="knowledge-content">
+                            <h4>毛发护理：</h4>
+                            <ul>
+                                <li><strong>短毛猫：</strong>每周用硅胶梳梳理1次，去除浮毛；长毛猫（如布偶、波斯猫）需每日梳理，重点梳理腋下、腹部等易打结部位。</li>
+                                <li><strong>换毛季（春秋）：</strong>增加梳理频率，可使用祛毛梳，减少毛球症风险。</li>
+                            </ul>
+                            
+                            <h4>生活环境与健康：</h4>
+                            <ul>
+                                <li><strong>猫砂盆：</strong>每只猫咪至少配备1个猫砂盆，每日清理粪便，每周彻底更换猫砂并清洗盆具，避免细菌滋生。</li>
+                                <li><strong>活动空间：</strong>提供猫爬架、猫抓板，满足攀爬与磨爪需求；放置阳光充足的窗台，让猫咪享受日光浴。</li>
+                            </ul>
+                            
+                            <h4>健康检查：</h4>
+                            <ul>
+                                <li><strong>耳朵：</strong>每周观察是否有黑褐色分泌物、异味，若有需排查耳螨。</li>
+                                <li><strong>眼睛：</strong>每日擦拭分泌物，若出现结膜充血、畏光，需及时就医。</li>
+                                <li><strong>口腔：</strong>每周检查牙龈是否红肿，定期刷牙或使用洁牙零食，预防口炎。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 宠物详情 -->
+        <section id="pet-detail" class="page" style="display: none;">
+            <div class="container">
+                <div class="pet-detail" id="pet-detail-content">
+                    <!-- 宠物详情将通过JavaScript动态生成 -->
+                </div>
+                
+                <!-- 领养申请表 -->
+                <div class="adoption-form">
+                    <h3>领养申请</h3>
+                    <form id="adoption-form">
+                        <input type="hidden" id="petId" name="petId">
+                        <div class="form-group">
+                            <label for="reason">领养原因</label>
+                            <textarea id="reason" name="reason" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">联系方式</label>
+                            <input type="text" id="contact" name="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="has-pet-experience">是否养过小动物</label>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="has-pet-experience" value="yes" required>
+                                    是
+                                </label>
+                                <label>
+                                    <input type="radio" name="has-pet-experience" value="no">
+                                    否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group agree-checkbox">
+                            <div class="custom-checkbox">
+                                <input type="checkbox" id="agree-terms" name="agree-terms" required>
+                                <span class="checkmark"></span>
+                            </div>
+                            <label for="agree-terms">我已阅读并同意<a href="#" onclick="showPage('adoption-guide')">领养须知</a>和<a href="#" onclick="showPage('platform-rules')">平台规则</a></label>
+                        </div>
+                        <button type="submit" class="submit-btn">提交申请</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 领养历史 -->
+        <section id="adoption-history" class="page" style="display: none;">
+            <div class="container">
+                <h2>领养历史</h2>
+                <div id="history-list">
+                    <!-- 领养历史记录将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 平台规则 -->
+        <section id="platform-rules" class="page" style="display: none;">
+            <div class="container">
+                <div class="page-header">
+                    <h2>平台规则</h2>
+                    <button class="btn back-btn" onclick="showPage('pet-detail')">返回申请表</button>
+                </div>
+                <div class="content">
+                    <h3>用户协议</h3>
+                    <p>欢迎使用宠物领养系统。在使用本平台前，请仔细阅读以下协议：</p>
+                    <ul>
+                        <li>用户需提供真实、准确的个人信息</li>
+                        <li>用户需遵守国家相关法律法规</li>
+                        <li>用户不得发布虚假信息或进行欺诈行为</li>
+                        <li>用户需对领养的宠物负责，不得虐待或遗弃</li>
+                    </ul>
+                    
+                    <h3>领养规则</h3>
+                    <ol>
+                        <li>领养人需年满18周岁，具有完全民事行为能力</li>
+                        <li>领养人需有固定的住所和稳定的收入</li>
+                        <li>领养人需通过平台的审核流程</li>
+                        <li>领养人需签署领养协议，承诺对宠物负责</li>
+                        <li>领养人需定期接受平台的回访</li>
+                    </ol>
+                    
+                    <h3>禁止行为</h3>
+                    <ul>
+                        <li>禁止发布虚假领养信息</li>
+                        <li>禁止倒卖领养的宠物</li>
+                        <li>禁止虐待或遗弃领养的宠物</li>
+                        <li>禁止利用平台进行违法活动</li>
+                    </ul>
+                    
+                    <h3>违规处理</h3>
+                    <p>对于违反平台规则的用户，平台有权采取以下措施：</p>
+                    <ul>
+                        <li>警告</li>
+                        <li>限制领养权限</li>
+                        <li>冻结账号</li>
+                        <li>永久封禁账号</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 咨询反馈 -->
+        <section id="feedback" class="page" style="display: none;">
+            <div class="container">
+                <h2>咨询反馈</h2>
+                <div class="feedback-content">
+                    <div class="feedback-form-section">
+                        <h3>提交反馈</h3>
+                        <form id="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-type">反馈类型</label>
+                                <select id="feedback-type" required>
+                                    <option value="">请选择</option>
+                                    <option value="咨询">咨询</option>
+                                    <option value="建议">建议</option>
+                                    <option value="投诉">投诉</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-title">标题</label>
+                                <input type="text" id="feedback-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-content">内容</label>
+                                <textarea id="feedback-content" rows="5" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback-contact">联系方式</label>
+                                <input type="text" id="feedback-contact" required>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                                <button type="submit" class="btn">提交反馈</button>
+                                <button type="button" class="btn btn-light" onclick="showPage('user-center')">返回个人中心</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="feedback-list-section">
+                        <h3>我的反馈</h3>
+                        <div id="feedback-list">
+                            <!-- 反馈列表将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 用户中心 -->
+        <section id="user-center" class="page" style="display: none;">
+            <div class="container">
+                <h2>用户中心</h2>
+                <div class="user-center-content">
+                    <div class="user-nav">
+                        <ul>
+                            <li><a href="#" onclick="showUserSection('profile')">个人信息</a></li>
+                            <li><a href="#" onclick="showUserSection('permissions')">权限设置</a></li>
+                            <li><a href="#" onclick="showUserSection('account-status')">账号状态</a></li>
+                            <li><a href="#" onclick="showUserSection('favorites')">我的收藏</a></li>
+                            <li><a href="#" onclick="showUserSection('adoption-history')">领养历史</a></li>
+                            <li><a href="#" onclick="showUserSection('application-records')">申请记录</a></li>
+                            <li><a href="#" onclick="showUserSection('topics')">我的话题</a></li>
+                            <li><a href="#" onclick="showUserSection('likes')">我的点赞</a></li>
+                            <li><a href="#" onclick="showUserSection('comments')">我的评论</a></li>
+                            <li><a href="#" onclick="showPage('feedback')">咨询反馈</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="user-section">
+                        <!-- 个人信息 -->
+                        <div id="profile-section" class="user-section-content">
+                            <h3>个人信息修改</h3>
+                            <form id="profile-form">
+                                <div class="form-group">
+                                    <label for="user-name">用户名</label>
+                                    <input type="text" id="user-name" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-phone">手机号</label>
+                                    <input type="tel" id="user-phone" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-email">邮箱</label>
+                                    <input type="email" id="user-email" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-address">地址</label>
+                                    <input type="text" id="user-address" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-password">新密码</label>
+                                    <input type="password" id="user-password" placeholder="不修改请留空">
+                                </div>
+                                <button type="submit" class="btn">保存修改</button>
+                            </form>
+                        </div>
+                        
+                        <!-- 权限设置 -->
+                        <div id="permissions-section" class="user-section-content" style="display: none;">
+                            <h3>用户权限设置</h3>
+                            <div class="permissions-list">
+                                <div class="permission-item">
+                                    <span>浏览宠物列表</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <span>提交领养申请</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <span>查看领养历史</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="permission-item">
+                                    <span>发布评论</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <button class="btn" onclick="savePermissions()">保存权限设置</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 账号状态 -->
+                        <div id="account-status-section" class="user-section-content" style="display: none;">
+                            <h3>账号状态管理</h3>
+                            <div class="account-status-info">
+                                <div class="status-item">
+                                    <span>当前状态</span>
+                                    <span class="status-badge active">正常</span>
+                                </div>
+                                <div class="status-item">
+                                    <span>注册时间</span>
+                                    <span>2024-01-01</span>
+                                </div>
+                                <div class="status-item">
+                                    <span>最后登录</span>
+                                    <span>2024-12-18</span>
+                                </div>
+                            </div>
+                            <div class="account-actions">
+                                <h4>账号操作</h4>
+                                <button class="btn btn-danger" onclick="freezeAccount()">冻结账号</button>
+                                <button class="btn btn-warning" onclick="deactivateAccount()">注销账号</button>
+                                <button class="btn btn-primary" onclick="logout()">退出登录</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 我的收藏 -->
+                        <div id="favorites-section" class="user-section-content" style="display: none;">
+                            <h3>我的收藏</h3>
+                            <div id="favorites-list">
+                                <!-- 收藏列表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 领养历史 -->
+                        <div id="adoption-history-section" class="user-section-content" style="display: none;">
+                            <h3>领养历史</h3>
+                            <div id="user-history-list">
+                                <!-- 领养历史记录将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 申请记录 -->
+                        <div id="application-records-section" class="user-section-content" style="display: none;">
+                            <h3>申请记录</h3>
+                            <div id="application-records-list">
+                                <!-- 申请记录将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 我的话题 -->
+                        <div id="topics-section" class="user-section-content" style="display: none;">
+                            <h3>我的话题</h3>
+                            <div id="user-topics-list">
+                                <!-- 我的话题将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 我的点赞 -->
+                        <div id="likes-section" class="user-section-content" style="display: none;">
+                            <h3>我的点赞</h3>
+                            <div id="user-likes-list">
+                                <!-- 我的点赞将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 我的评论 -->
+                        <div id="comments-section" class="user-section-content" style="display: none;">
+                            <h3>我的评论</h3>
+                            <div id="user-comments-list">
+                                <!-- 我的评论将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 领养故事/经验分享区 -->
+        <section id="adoption-stories" class="page" style="display: none;">
+            <div class="container">
+                <h2>领养故事/经验分享</h2>
+                <div class="stories-header">
+                    <button class="btn" onclick="showPublishStoryModal()">发布故事</button>
+                    <div class="filter-options">
+                        <select id="story-type-filter" onchange="filterStories()">
+                            <option value="">全部类型</option>
+                            <option value="猫">猫</option>
+                            <option value="狗">狗</option>
+                            <option value="其他">其他</option>
+                        </select>
+                        <select id="story-duration-filter" onchange="filterStories()">
+                            <option value="">全部时长</option>
+                            <option value="1">1个月内</option>
+                            <option value="3">3个月内</option>
+                            <option value="6">半年以上</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="stories-list" class="stories-list">
+                    <!-- 故事列表将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 宠物话题圈 -->
+        <section id="topic-circle" class="page" style="display: none;">
+            <div class="container">
+                <h2>宠物话题圈</h2>
+                <div class="topic-header">
+                    <button class="btn" onclick="showCreateTopicModal()">发起话题</button>
+                    <div class="search-box">
+                        <input type="text" id="topic-search" placeholder="搜索话题...">
+                        <button onclick="searchTopics()" class="btn">搜索</button>
+                    </div>
+                </div>
+                <div class="topics-container">
+                    <div class="hot-topics">
+                        <h3>热门话题</h3>
+                        <div id="hot-topics-list">
+                            <!-- 热门话题将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <div id="topic-detail">
+                            <h3 id="topic-title">请选择话题</h3>
+                            <div id="topic-dynamic-list">
+                                <!-- 话题动态将通过JavaScript动态生成 -->
+                            </div>
+                            <div class="dynamic-publish">
+                                <textarea id="dynamic-content" placeholder="分享你的想法..."></textarea>
+                                <button onclick="publishDynamic()" class="btn">发布</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 领养咨询 -->
+        <section id="messages" class="page" style="display: none;">
+            <div class="container">
+                <h2>领养咨询</h2>
+                <div class="messages-container">
+                    <div class="contacts-list" id="contacts-list">
+                        <!-- 联系人列表将通过JavaScript动态生成 -->
+                    </div>
+                    <div class="chat-area">
+                        <div class="chat-header" id="chat-header">
+                            选择联系人开始聊天
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- 聊天消息将通过JavaScript动态生成 -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="message-input" placeholder="输入消息...">
+                            <button onclick="sendMessage()" class="btn">发送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户登录</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">账号</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group captcha">
+                    <label for="captcha">验证码</label>
+                    <input type="text" id="captcha" name="captcha" required>
+                    <img src="" alt="验证码">
+                </div>
+                <button type="submit" class="submit-btn">登录</button>
+                <p class="register-link"><a href="#" onclick="showRegisterModal()">用户注册</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>用户注册</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-username">账号</label>
+                    <input type="text" id="reg-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">密码</label>
+                    <input type="password" id="reg-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">手机号</label>
+                    <input type="tel" id="reg-phone" name="phone" required>
+                </div>
+                <div class="form-group captcha">
+                    <label for="reg-captcha">验证码</label>
+                    <input type="text" id="reg-captcha" name="captcha" required>
+                    <img src="" alt="验证码">
+                </div>
+                <button type="submit" class="submit-btn">注册</button>
+                <p class="login-link"><a href="#" onclick="showLoginModal()">已有账号？立即登录</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- 发布故事模态框 -->
+    <div id="publish-story-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>发布领养故事</h2>
+            <form id="publish-story-form">
+                <div class="form-group">
+                    <label for="story-title">标题</label>
+                    <input type="text" id="story-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="story-content">内容</label>
+                    <textarea id="story-content" name="content" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story-pet-type">宠物类型</label>
+                    <select id="story-pet-type" name="petType" required>
+                        <option value="">请选择</option>
+                        <option value="猫">猫</option>
+                        <option value="狗">狗</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="story-duration">领养时长</label>
+                    <select id="story-duration" name="duration" required>
+                        <option value="">请选择</option>
+                        <option value="1">1个月内</option>
+                        <option value="3">3个月内</option>
+                        <option value="6">半年以上</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="story-tags">标签（用逗号分隔）</label>
+                    <input type="text" id="story-tags" name="tags" placeholder="如：新手领养,流浪宠领养,猫狗相处">
+                </div>
+                <div class="form-group">
+                    <label for="story-image">上传图片</label>
+                    <input type="file" id="story-image" name="image" accept="image/*">
+                </div>
+                <button type="submit" class="submit-btn">发布</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 创建话题模态框 -->
+    <div id="create-topic-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>发起话题</h2>
+            <form id="create-topic-form">
+                <div class="form-group">
+                    <label for="topic-name">话题名称</label>
+                    <input type="text" id="topic-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="topic-description">话题描述</label>
+                    <textarea id="topic-description" name="description" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">创建</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 宠物领养系统 版权所有</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
