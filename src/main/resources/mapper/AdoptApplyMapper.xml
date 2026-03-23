@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.petadopt.mapper.AdoptApplyMapper">
+    <!-- 根据ID查询 -->
+    <select id="selectAdoptApplyById" parameterType="Long" resultType="com.example.petadopt.entity.AdoptApply">
+        SELECT * FROM adopt_apply WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="selectAdoptApplyList" resultType="com.example.petadopt.entity.AdoptApply">
+        SELECT * FROM adopt_apply
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insertAdoptApply" parameterType="com.example.petadopt.entity.AdoptApply">
+        INSERT INTO adopt_apply(pet_id, user_name, user_phone, user_wechat, apply_reason, create_time)
+        VALUES(#{petId}, #{userName}, #{userPhone}, #{userWechat}, #{applyReason}, #{createTime})
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateAdoptApply" parameterType="com.example.petadopt.entity.AdoptApply">
+        UPDATE adopt_apply
+        SET pet_id=#{petId}, user_name=#{userName}, user_phone=#{userPhone},
+        user_wechat=#{userWechat}, apply_reason=#{applyReason}, create_time=#{createTime}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteAdoptApplyById" parameterType="Long">
+        DELETE FROM adopt_apply WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,41 @@
+package com.example.petadopt.service;
+
+import com.example.petadopt.entity.AdoptApply;
+import com.example.petadopt.mapper.AdoptApplyMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class AdoptApplyService {
+    @Autowired
+    private AdoptApplyMapper adoptApplyMapper;
+
+    // 新增（提交领养申请）
+    public int addAdoptApply(AdoptApply adoptApply) {
+        // 自动设置当前时间为创建时间
+        adoptApply.setCreateTime(LocalDateTime.now());
+        return adoptApplyMapper.insertAdoptApply(adoptApply);
+    }
+
+    // 更新
+    public int updateAdoptApply(AdoptApply adoptApply) {
+        return adoptApplyMapper.updateAdoptApply(adoptApply);
+    }
+
+    // 删除
+    public int deleteAdoptApply(Long id) {
+        return adoptApplyMapper.deleteAdoptApplyById(id);
+    }
+
+    // 根据ID查询
+    public AdoptApply getAdoptApplyById(Long id) {
+        return adoptApplyMapper.selectAdoptApplyById(id);
+    }
+
+    // 查询所有申请
+    public List<AdoptApply> getAllAdoptApplies() {
+        return adoptApplyMapper.selectAdoptApplyList();
+    }
+}
