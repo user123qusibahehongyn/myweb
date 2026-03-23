@@ -22,7 +22,6 @@
                     <li><a href="#" onclick="showPage('adoption-services')">领养服务</a></li>
                     <li><a href="#" onclick="showPage('pet-knowledge')">宠物知识</a></li>
                     <li><a href="#" onclick="showPage('adoption-stories')">领养故事</a></li>
-                    <li><a href="#" onclick="showPage('topic-circle')">话题圈</a></li>
                     <li><a href="#" onclick="showPage('messages')">领养咨询</a></li>
                 </ul>
             </nav>
@@ -106,6 +105,7 @@
                             <option value="公">公</option>
                             <option value="母">母</option>
                         </select>
+                        <button onclick="showPage('add-pet')" class="btn btn-primary">添加新宠物</button>
                     </div>
                 </div>
                 
@@ -417,7 +417,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contact">联系方式</label>
-                            <input type="text" id="contact" name="contact" required>
+                            <input type="tel" id="contact" name="contact" placeholder="请输入11位手机号码" maxlength="11" pattern="[0-9]{11}" required>
                         </div>
                         <div class="form-group">
                             <label for="has-pet-experience">是否养过小动物</label>
@@ -451,6 +451,57 @@
                 <h2>领养历史</h2>
                 <div id="history-list">
                     <!-- 领养历史记录将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 管理员审批 -->
+        <section id="admin-approval" class="page" style="display: none;">
+            <div class="container">
+                <h2>管理员中心</h2>
+                <div class="user-center-content">
+                    <div class="user-nav">
+                        <ul>
+                            <li><a href="#" onclick="showAdminSection('approval')">申请审批</a></li>
+                            <li><a href="#" onclick="showAdminSection('feedback')">反馈管理</a></li>
+                            <li><a href="#" onclick="showAdminSection('pets')">宠物管理</a></li>
+                            <li><a href="#" onclick="showAdminSection('users')">用户管理</a></li>
+                        </ul>
+                    </div>
+                    <div class="user-section">
+                        <!-- 申请审批 -->
+                        <div id="approval-section" class="user-section-content">
+                            <h3>申请审批</h3>
+                            <div id="approval-list">
+                                <!-- 申请审批列表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 反馈管理 -->
+                        <div id="feedback-section" class="user-section-content" style="display: none;">
+                            <h3>反馈管理</h3>
+                            <div id="admin-feedback-list">
+                                <!-- 反馈列表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 宠物管理 -->
+                        <div id="pets-section" class="user-section-content" style="display: none;">
+                            <h3>宠物管理</h3>
+                            <button class="btn" onclick="showPage('add-pet')">添加新宠物</button>
+                            <div id="admin-pets-list">
+                                <!-- 宠物列表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 用户管理 -->
+                        <div id="users-section" class="user-section-content" style="display: none;">
+                            <h3>用户管理</h3>
+                            <div id="admin-users-list">
+                                <!-- 用户列表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -497,6 +548,62 @@
                         <li>冻结账号</li>
                         <li>永久封禁账号</li>
                     </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 添加新宠物页面 -->
+        <section id="add-pet" class="page" style="display: none;">
+            <div class="container">
+                <div class="page-header">
+                    <h2>添加新宠物</h2>
+                    <button class="btn back-btn" onclick="showPage('pets')">返回宠物列表</button>
+                </div>
+                <div class="add-pet-form">
+                    <form id="add-pet-form">
+                        <div class="form-group">
+                            <label for="pet-name">宠物名称</label>
+                            <input type="text" id="pet-name" name="pet-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-type">宠物类型</label>
+                            <select id="pet-type" name="pet-type" required>
+                                <option value="">请选择</option>
+                                <option value="狗">狗</option>
+                                <option value="猫">猫</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-breed">宠物品种</label>
+                            <input type="text" id="pet-breed" name="pet-breed" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-age">宠物年龄</label>
+                            <input type="text" id="pet-age" name="pet-age" placeholder="如：1岁" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-gender">宠物性别</label>
+                            <select id="pet-gender" name="pet-gender" required>
+                                <option value="">请选择</option>
+                                <option value="公">公</option>
+                                <option value="母">母</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-color">宠物颜色</label>
+                            <input type="text" id="pet-color" name="pet-color" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-description">宠物描述</label>
+                            <textarea id="pet-description" name="pet-description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-image">宠物图片</label>
+                            <input type="file" id="pet-image" name="pet-image" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">添加宠物</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -556,12 +663,12 @@
                     <div class="user-nav">
                         <ul>
                             <li><a href="#" onclick="showUserSection('profile')">个人信息</a></li>
-                            <li><a href="#" onclick="showUserSection('permissions')">权限设置</a></li>
+                            <li id="approval-nav-item"><a href="#" onclick="showPage('admin-approval')">管理员中心</a></li>
                             <li><a href="#" onclick="showUserSection('account-status')">账号状态</a></li>
                             <li><a href="#" onclick="showUserSection('favorites')">我的收藏</a></li>
                             <li><a href="#" onclick="showUserSection('adoption-history')">领养历史</a></li>
                             <li><a href="#" onclick="showUserSection('application-records')">申请记录</a></li>
-                            <li><a href="#" onclick="showUserSection('topics')">我的话题</a></li>
+                            <li><a href="#" onclick="showUserSection('topics')">我的故事</a></li>
                             <li><a href="#" onclick="showUserSection('likes')">我的点赞</a></li>
                             <li><a href="#" onclick="showUserSection('comments')">我的评论</a></li>
                             <li><a href="#" onclick="showPage('feedback')">咨询反馈</a></li>
@@ -597,42 +704,6 @@
                             </form>
                         </div>
                         
-                        <!-- 权限设置 -->
-                        <div id="permissions-section" class="user-section-content" style="display: none;">
-                            <h3>用户权限设置</h3>
-                            <div class="permissions-list">
-                                <div class="permission-item">
-                                    <span>浏览宠物列表</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <div class="permission-item">
-                                    <span>提交领养申请</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <div class="permission-item">
-                                    <span>查看领养历史</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <div class="permission-item">
-                                    <span>发布评论</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <button class="btn" onclick="savePermissions()">保存权限设置</button>
-                            </div>
-                        </div>
-                        
                         <!-- 账号状态 -->
                         <div id="account-status-section" class="user-section-content" style="display: none;">
                             <h3>账号状态管理</h3>
@@ -654,6 +725,7 @@
                                 <h4>账号操作</h4>
                                 <button class="btn btn-danger" onclick="freezeAccount()">冻结账号</button>
                                 <button class="btn btn-warning" onclick="deactivateAccount()">注销账号</button>
+                                <button class="btn btn-info" onclick="switchAccount()">切换账号</button>
                                 <button class="btn btn-primary" onclick="logout()">退出登录</button>
                             </div>
                         </div>
@@ -682,11 +754,11 @@
                             </div>
                         </div>
                         
-                        <!-- 我的话题 -->
+                        <!-- 我的故事 -->
                         <div id="topics-section" class="user-section-content" style="display: none;">
-                            <h3>我的话题</h3>
+                            <h3>我的故事</h3>
                             <div id="user-topics-list">
-                                <!-- 我的话题将通过JavaScript动态生成 -->
+                                <!-- 我的故事将通过JavaScript动态生成 -->
                             </div>
                         </div>
                         
@@ -801,9 +873,13 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>用户登录</h2>
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchLoginTab('user')">用户登录</button>
+                <button class="tab-btn" onclick="switchLoginTab('admin')">管理员登录</button>
+            </div>
             <form id="login-form">
                 <div class="form-group">
-                    <label for="username">账号</label>
+                    <label for="username">用户名</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="form-group">
@@ -817,6 +893,7 @@
                 </div>
                 <button type="submit" class="submit-btn">登录</button>
                 <p class="register-link"><a href="#" onclick="showRegisterModal()">用户注册</a></p>
+                <p class="admin-register-link" style="display: none;"><a href="#" onclick="showRegisterModal('admin')">管理员注册</a></p>
             </form>
         </div>
     </div>
@@ -826,26 +903,37 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>用户注册</h2>
+            <div class="register-tabs">
+                <button class="tab-btn active" onclick="switchRegisterTab('user')">用户注册</button>
+                <button class="tab-btn" onclick="switchRegisterTab('admin')">管理员注册</button>
+            </div>
             <form id="register-form">
                 <div class="form-group">
-                    <label for="reg-username">账号</label>
-                    <input type="text" id="reg-username" name="username" required>
+                    <label for="reg-username">用户名</label>
+                    <input type="text" id="reg-username" name="username" required placeholder="请输入用户名">
                 </div>
                 <div class="form-group">
                     <label for="reg-password">密码</label>
-                    <input type="password" id="reg-password" name="password" required>
+                    <input type="password" id="reg-password" name="password" required placeholder="密码不少于6位" minlength="6">
                 </div>
                 <div class="form-group">
                     <label for="reg-phone">手机号</label>
-                    <input type="tel" id="reg-phone" name="phone" required>
+                    <div class="phone-input-group">
+                        <input type="tel" id="reg-phone" name="phone" required placeholder="请输入11位手机号" maxlength="11" pattern="[0-9]{11}">
+                        <button type="button" id="send-sms-btn" class="btn-sms" onclick="sendSMSCode()">发送验证码</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-sms-code">短信验证码</label>
+                    <input type="text" id="reg-sms-code" name="smsCode" required placeholder="请输入短信验证码" maxlength="6">
                 </div>
                 <div class="form-group captcha">
-                    <label for="reg-captcha">验证码</label>
-                    <input type="text" id="reg-captcha" name="captcha" required>
-                    <img src="" alt="验证码">
+                    <label for="reg-captcha">图形验证码</label>
+                    <input type="text" id="reg-captcha" name="captcha" required placeholder="请输入图形验证码">
+                    <img src="" alt="验证码" id="reg-captcha-img" onclick="refreshRegCaptcha()" style="cursor: pointer;">
                 </div>
                 <button type="submit" class="submit-btn">注册</button>
-                <p class="login-link"><a href="#" onclick="showLoginModal()">已有账号？立即登录</a></p>
+                <p class="login-link"><a href="#" onclick="showLoginModal()">已有用户名？立即登录</a></p>
             </form>
         </div>
     </div>
@@ -911,6 +999,124 @@
                 </div>
                 <button type="submit" class="submit-btn">创建</button>
             </form>
+        </div>
+    </div>
+
+    <!-- 用户权限设置模态框 -->
+    <div id="user-permission-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUserPermissionModal()">&times;</span>
+            <h2>用户权限设置</h2>
+            <form id="user-permission-form">
+                <input type="hidden" id="permission-username" name="username">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="permission-username-display" disabled>
+                </div>
+                <div class="form-group">
+                    <label>管理员权限</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-admin" name="isAdmin">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>浏览宠物列表</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-view-pets" name="viewPets" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>提交领养申请</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-submit-application" name="submitApplication" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>查看领养历史</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-view-history" name="viewHistory" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>发布评论</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-post-comment" name="postComment" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>发布故事</label>
+                    <label class="switch">
+                        <input type="checkbox" id="permission-publish-story" name="publishStory" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button type="button" class="submit-btn" onclick="saveUserPermissions()">保存权限</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 历史登录用户名模态框 -->
+    <div id="account-history-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAccountHistoryModal()">&times;</span>
+            <h2>历史登录用户名</h2>
+            <div id="account-history-list">
+                <!-- 历史用户名将通过JavaScript动态生成 -->
+            </div>
+            <div class="account-history-actions">
+                <button class="btn" onclick="showLoginModal()">登录新用户名</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户详情模态框 -->
+    <div id="user-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUserDetailModal()">&times;</span>
+            <h2>用户详情</h2>
+            <div class="user-detail-content">
+                <div class="user-info-section">
+                    <div class="user-detail-avatar" id="user-detail-avatar"></div>
+                    <div class="user-detail-name" id="user-detail-username"></div>
+                </div>
+                <div class="user-comments-section">
+                    <h3>用户评论</h3>
+                    <div id="user-comments-list">
+                        <!-- 用户评论将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                <div class="user-feedback-section">
+                    <h3>用户反馈</h3>
+                    <div id="user-feedback-list">
+                        <!-- 用户反馈将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                <div class="user-chat-section">
+                    <h3>与用户聊天</h3>
+                    <div class="chat-messages" id="user-chat-messages">
+                        <!-- 聊天记录将通过JavaScript动态生成 -->
+                    </div>
+                    <div class="chat-input-section">
+                        <textarea id="user-chat-input" placeholder="输入消息..."></textarea>
+                        <button class="btn" onclick="sendUserMessage()">发送</button>
+                    </div>
+                </div>
+                <div class="user-permission-section">
+                    <h3>权限设置</h3>
+                    <div class="permission-item">
+                        <label>管理员权限</label>
+                        <label class="switch">
+                            <input type="checkbox" id="user-detail-admin" onchange="updateUserPermission()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
