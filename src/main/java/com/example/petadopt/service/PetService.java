@@ -24,10 +24,7 @@ public class PetService {
 
     // 新增宠物
     public boolean addPet(Pet pet) {
-        // 默认状态为可领养
-        if (pet.getStatus() == null) {
-            pet.setStatus("available");
-        }
+
         return petMapper.insertPet(pet) > 0;
     }
 

@@ -15,7 +15,6 @@ public class ApplicationService {
     // 提交领养申请
     public boolean submitApplication(Application application) {
         // 默认状态为pending
-        application.setStatus("pending");
         return applicationMapper.insertApplication(application) > 0;
     }
 
